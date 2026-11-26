@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hacker Public Radio Countdown</title>
+  <style>
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      background: #101820;
+      color: #f4f7f9;
+      font: 16px/1.5 system-ui, sans-serif;
+      text-align: center;
+    }
+    main { padding: 2rem; }
+    h1 { margin-bottom: .5rem; }
+    #timer {
+      margin: 1.5rem 0;
+      color: #65d6ad;
+      font-size: clamp(2rem, 8vw, 5rem);
+      font-variant-numeric: tabular-nums;
+      font-weight: 700;
+    }
+    p { color: #c6d0d8; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Hacker Public Radio</h1>
+    <p>Countdown to December 31, 2026 at 10:00 UTC</p>
+    <div id="timer" role="timer" aria-live="polite"></div>
+  </main>
+
+  <script>
+    const target = Date.parse("2026-12-31T10:00:00Z");
+    const timer = document.getElementById("timer");
+
+    function update() {
+      const ms = target - Date.now();
+
+      if (ms <= 0) {
+        timer.textContent = "It's time!";
+        return;
+      }
+
+      const days = Math.floor(ms / 86400000);
+      const hours = Math.floor(ms % 86400000 / 3600000);
+      const minutes = Math.floor(ms % 3600000 / 60000);
+      const seconds = Math.floor(ms % 60000 / 1000);
+
+      timer.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    update();
+    setInterval(update, 1000);
+  </script>
+</body>
+</html>
